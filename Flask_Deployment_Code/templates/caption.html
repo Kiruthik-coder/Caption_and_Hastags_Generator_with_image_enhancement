@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>215</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_caption.css') }}">
+</head>
+<body>
+    <header>
+            <nav class="navbar">
+                <a href="/" class = "nav_lk" style="padding-left: 15px;">Home</a>
+                <a href="/about" class = "nav_lk">About</a>
+                <a href="/services" class = "nav_lk">Services</a>
+                <a href="/team" class = "nav_lk">Team</a>
+                <a href="/description" class = "nav_lk">Description</a>
+                <a href="/contact" class = "nav_lk">Contact</a>
+            </nav>
+    </header>
+
+  <div id="bod">
+  <form action = "/predict" id="upload-file" method="post" enctype="multipart/form-data">
+      <h2 id = "head">Drag and drop a file or select add Image</h2>
+      <div align="center"><input type="file" name="file" id="img_up_bt" required></div><br>
+
+      <div align="center" id = "opts">
+          <table>
+              <tr>
+                  <td><label>Point of View</label></td>
+                  <td>
+                      <select name="view" id="view" class="drp" required>
+                            <option value="first">First Person</option>
+                            <option value="third">Third Person</option>
+                      </select>
+                  </td>
+                  <td><label>Mood</label></td>
+                  <td>
+                      <select name="md" id="md" class="drp" required>
+                            <option value="Happy">Happy</option>
+                            <option value="Adventure">Adventure</option>
+                            <option value="Sad">Sad</option>
+                            <option value="Funny">Funny</option>
+                            <option value="Romantic">Romantic</option>
+                      </select>
+                  </td>
+                  <td><label>Size</label></td>
+                  <td>
+                      <select name="size" id="size" class="drp" required>
+                            <option value="short">Short</option>
+                            <option value="Long">Long</option>
+                      </select>
+                  </td>
+              </tr>
+          </table>
+
+      </div>
+      <div align="center"><input type="submit" value="Generate Caption" id = "sub_bt"></div>
+  </form>
+
+  <div align="center">
+  <h2 id = "cap_hd"><U>Caption</U></h2>
+  <div id = "cap_div">
+        <table>
+          {% for  k,v in pred.items() %}
+             <tr>
+            <td>{{k}}</td>
+            <td id="{{k}}" >{{v}}</td>
+            <td><button  onclick="myFun({{k}})">Copy</button></td>
+          </tr>   
+        {% endfor %}
+        </table>
+  </div>
+  <h2 id = "cap_hd"><U>Hashtags</U></h2>
+  <div id = "cap_div"><p><h3 id="has">
+    {% for a in hashs %}
+            <button>{{a}}</button>
+          {% endfor %}</h3></p>
+</div>
+<button onclick="myFunction()">Copy text</button>
+<script>
+    function myFunction() {
+      var copyText = {{hashs}}
+      alert(copyText);
+     // Select the text field
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); // For mobile devices
+
+    // Copy the text inside the text field
+    navigator.clipboard.writeText(copyText.value);
+    
+    // Alert the copied text
+    alert("Copied the text: " + copyText.value);
+    }
+    function myFun(x){
+      window.alert(x);
+      var copyText = document.getElementById(x);
+      window.alert(copyText);
+      navigator.clipboard.writeText(copyText.value);
+      alert("Copied the text: " + copyText.value);
+    }
+    
+    </script>
+
+  </div>
+</div>
+</body>
+</html>
