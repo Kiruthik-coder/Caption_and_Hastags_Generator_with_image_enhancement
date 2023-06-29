@@ -1,1 +1,1 @@
-# Caption_and_Hastags_Generator_with_image_enhancement
+# Caption&Hastags Generator and image enhancement
